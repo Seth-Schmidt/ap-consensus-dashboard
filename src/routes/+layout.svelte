@@ -1,5 +1,20 @@
 <script>
     import "../app.css";
+
+    import { page } from '$app/stores';
+    import { env } from '$env/dynamic/public';
+
+    export let API_PREFIX = env.PUBLIC_API_PREFIX;
+    console.log('API_PREFIX', env, API_PREFIX);
+
+    let slug;
+    $: {
+      //console.log($page);
+      slug = $page.route.id.split('/')[1];
+      console.log('slug', slug);
+    }
+
+
 </script>
 
 <!--
@@ -23,9 +38,9 @@
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                   <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                  <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>
+                  <a href="/" class={slug == "" ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"} aria-current="page">Dashboard</a>
 
-                  <a href="/projects" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                  <a href="/projects" class={slug == "projects" ? "bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" : "text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"}>Projects</a>
                 </div>
               </div>
             </div>
@@ -70,7 +85,7 @@
     </nav>
     <header class="py-10">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+        <h1 class="text-3xl font-bold tracking-tight text-white">{slug == "" ? "Dashboard" : slug}</h1>
       </div>
     </header>
   </div>
