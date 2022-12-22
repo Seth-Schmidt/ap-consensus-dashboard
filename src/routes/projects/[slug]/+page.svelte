@@ -18,6 +18,7 @@
         snapshotters = sdata.data.snapshotters;
         const resp = await axios.get(API_PREFIX+'/metrics/'+slug+'/epochs');
         console.log('resp', resp.data);
+        resp.data = resp.data.data;
         for (let i=0; i<resp.data.epochs.length; i++){
           console.log('processing', resp.data.epochs[i].sourcechainEndheight);
             const epochData = await axios.get(API_PREFIX+'/metrics/'+slug+'/'+resp.data.epochs[i].sourcechainEndheight+'/submissionStatus');
