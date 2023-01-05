@@ -9,40 +9,44 @@
 
     let epochs = [];
     let snapshotters = [];
+    let currentEpoch = "";
 
 
     onMount(async () => {
       console.log('got', API_PREFIX);
-        const sdata = await axios.get(API_PREFIX+'/metrics/'+slug+'/snapshotters');
-        console.log('snapshotters', sdata.data);
-        snapshotters = sdata.data.snapshotters;
-        const resp = await axios.get(API_PREFIX+'/metrics/'+slug+'/epochs');
-        console.log('resp', resp.data);
-        resp.data = resp.data.data;
-        for (let i=0; i<resp.data.epochs.length; i++){
-          console.log('processing', resp.data.epochs[i].sourcechainEndheight);
-            const epochData = await axios.get(API_PREFIX+'/metrics/'+slug+'/'+resp.data.epochs[i].sourcechainEndheight+'/submissionStatus');
-            console.log(epochData.data);
-            epochData.data.sort((a, b) => {
-              return a.submittedTS - b.submittedTS
-            });
-            let epoch = {
-                id: resp.data.epochs[i].sourcechainEndheight,
-                finalized: resp.data.epochs[i].finalized,
-                submissions: epochData.data
-            }
-            epochs = [...epochs, epoch];
-            if (i==4){
-              break;
-            }
-        }
+      const epoch = await axios.get(API_PREFIX+'/currentEpoch');
+      console.log(epoch.data);
+      currentEpoch = epoch.data.epochEndBlockHeight;
+      const sdata = await axios.get(API_PREFIX+'/metrics/'+slug+'/snapshotters');
+      console.log('snapshotters', sdata.data);
+      snapshotters = sdata.data.snapshotters;
+      const resp = await axios.get(API_PREFIX+'/metrics/'+slug+'/epochs');
+      console.log('resp', resp.data);
+      resp.data = resp.data.data;
+      for (let i=0; i<resp.data.epochs.length; i++){
+        console.log('processing', resp.data.epochs[i].sourcechainEndheight);
+          const epochData = await axios.get(API_PREFIX+'/metrics/'+slug+'/'+resp.data.epochs[i].sourcechainEndheight+'/submissionStatus');
+          console.log(epochData.data);
+          epochData.data.sort((a, b) => {
+            return a.submittedTS - b.submittedTS
+          });
+          let epoch = {
+              id: resp.data.epochs[i].sourcechainEndheight,
+              finalized: resp.data.epochs[i].finalized,
+              submissions: epochData.data
+          }
+          epochs = [...epochs, epoch];
+          if (i==9){
+            break;
+          }
+      }
     });
 </script>
 <div>
     <h3 class="text-lg font-medium leading-6 text-gray-900">Project {slug.substr(21, 30)}</h3>
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-        <dt class="truncate text-sm font-medium text-gray-500">Epochs</dt>
+        <dt class="truncate text-sm font-medium text-gray-500">Epochs Shown</dt>
         <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{epochs.length}</dd>
       </div>
   
@@ -53,7 +57,7 @@
   
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt class="truncate text-sm font-medium text-gray-500">Current Epoch</dt>
-        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"></dd>
+        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><a href="https://etherscan.io/block/{currentEpoch}" target="_blank" rel="noreferrer noopener">{currentEpoch}</a></dd>
       </div>
     </dl>
 </div>
