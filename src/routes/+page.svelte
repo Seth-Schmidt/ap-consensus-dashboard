@@ -6,24 +6,27 @@
     export let API_PREFIX = env.PUBLIC_API_PREFIX;
 
     let projects = []
-
+    let currentEpoch = "";
 
     onMount(async () => {
       console.log('got', API_PREFIX);
-        const resp = await axios.get(API_PREFIX+'/metrics/projects');
-        console.log('resp', resp.data);
-        for (let i=0; i<resp.data.length; i++){
-            const snapshotters = await axios.get(API_PREFIX+'/metrics/'+resp.data[i]+'/snapshotters');
-            console.log(snapshotters.data);
-            let proj = {
-                id: resp.data[i],
-                snapshotters: snapshotters.data.snapshotters
-            }
-            projects = [...projects, proj];
-            if (i==9){
-              break;
-            }
-        }
+      const epoch = await axios.get(API_PREFIX+'/currentEpoch');
+      console.log(epoch.data);
+      currentEpoch = epoch.data.epochEndBlockHeight;
+      const resp = await axios.get(API_PREFIX+'/metrics/projects');
+      console.log('resp', resp.data);
+      for (let i=0; i<resp.data.length; i++){
+          const snapshotters = await axios.get(API_PREFIX+'/metrics/'+resp.data[i]+'/snapshotters');
+          console.log(snapshotters.data);
+          let proj = {
+              id: resp.data[i],
+              snapshotters: snapshotters.data.snapshotters
+          }
+          projects = [...projects, proj];
+          if (0 && i==9){
+            break;
+          }
+      }
     });
 </script>
 <div>
@@ -36,11 +39,11 @@
   
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt class="truncate text-sm font-medium text-gray-500">Current Epoch</dt>
-        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"></dd>
+        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><a href="https://etherscan.io/block/{currentEpoch}" target="_blank" rel="noreferrer noopener">{currentEpoch}</a></dd>
       </div>
   
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-        <dt class="truncate text-sm font-medium text-gray-500">Epoch Status</dt>
+        <dt class="truncate text-sm font-medium text-gray-500">Total Snapshotters</dt>
         <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"></dd>
       </div>
     </dl>

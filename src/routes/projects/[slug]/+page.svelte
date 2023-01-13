@@ -103,7 +103,7 @@
               <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                 <div class="flex -space-x-1 overflow-hidden">
                   {#each epoch.submissions as snapshotter}
-                  <img class="inline-block h-6 w-6 rounded-full ring-2 {snapshotter.submissionStatus == 'WITHIN_SCHEDULE' ? 'ring-white': 'ring-red'}" alt="{snapshotter.snapshotterInstanceID}" title="{snapshotter.snapshotterInstanceID}" src="https://avatars.dicebear.com/api/identicon/{snapshotter.snapshotterInstanceID}.png">
+                  <img class="inline-block h-6 w-6 rounded-full ring-2 {snapshotter.submissionStatus == 'WITHIN_SCHEDULE' ? 'ring-white': 'ring-red'}" alt="{snapshotter.snapshotterName}" title="{snapshotter.snapshotterName}" src="https://avatars.dicebear.com/api/identicon/{snapshotter.snapshotterName}.png">
                   {/each}
                 <!--
                   <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton">
