@@ -30,7 +30,7 @@
     });
 </script>
 <div>
-    <h3 class="text-lg font-medium leading-6 text-gray-900">Phase 1.5 Stats</h3>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Off-chain consensus Stats</h3>
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt class="truncate text-sm font-medium text-gray-500">Total Projects</dt>
