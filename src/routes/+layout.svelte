@@ -33,7 +33,7 @@
           <div class="flex h-16 items-center justify-between px-4 sm:px-0">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <img class="h-8 w-16" src="powerloom_logo_dark.png" alt="PowerLoom Logo">
+                <img class="h-8 w-16" src="/powerloom_logo_dark.png" alt="PowerLoom Logo">
               </div>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
