@@ -7,6 +7,7 @@
 
     let projects = []
     let currentEpoch = "";
+    let allSnapshotters= [];
 
     onMount(async () => {
       console.log('got', API_PREFIX);
@@ -18,6 +19,7 @@
       for (let i=0; i<resp.data.length; i++){
           const snapshotters = await axios.get(API_PREFIX+'/metrics/'+resp.data[i]+'/snapshotters');
           console.log(snapshotters.data);
+          allSnapshotters = [...new Set([...allSnapshotters, ...snapshotters.data.snapshotters])];
           let proj = {
               id: resp.data[i],
               snapshotters: snapshotters.data.snapshotters
@@ -44,7 +46,7 @@
   
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt class="truncate text-sm font-medium text-gray-500">Total Snapshotters</dt>
-        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"></dd>
+        <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{allSnapshotters.length}</dd>
       </div>
     </dl>
 </div>
@@ -78,7 +80,7 @@
               <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                 <div class="flex -space-x-1 overflow-hidden">
                   {#each project.snapshotters as snapshotter}
-                  <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" alt="{snapshotter}" src="https://avatars.dicebear.com/api/identicon/{snapshotter}.png">
+                  <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" alt="{snapshotter}" title="{snapshotter}" src="https://avatars.dicebear.com/api/identicon/{snapshotter}.png">
                   {/each}
                 <!--
                   <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton">
