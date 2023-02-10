@@ -25,7 +25,7 @@
               snapshotters: snapshotters.data.snapshotters
           }
           projects = [...projects, proj];
-          if (0 && i==9){
+          if (i==99){
             break;
           }
       }
