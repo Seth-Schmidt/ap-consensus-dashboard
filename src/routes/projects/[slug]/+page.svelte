@@ -2,12 +2,21 @@
     import { onMount } from 'svelte';
     import axios from "axios";
     import { env } from '$env/dynamic/public';
+    import { ethers } from "ethers";
 
     export let API_PREFIX = env.PUBLIC_API_PREFIX;
     export let NETWORK = env.PUBLIC_NETWORK || "Ethereum Mainnet";
     export let EXPLORER_PREFIX = env.PUBLIC_EXPLORER_PREFIX || "https://etherscan.io";
     export let data;
     const slug = data.slug;
+    export let RPC = env.PUBLIC_RPC;
+
+    console.log('got RPC', RPC);
+    let provider = new ethers.JsonRpcProvider(RPC);
+
+    const ABI=[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"snapshotterAddr","type":"address"},{"indexed":false,"internalType":"string","name":"snapshotCid","type":"string"},{"indexed":false,"internalType":"uint256","name":"epochEnd","type":"uint256"},{"indexed":false,"internalType":"string","name":"projectId","type":"string"},{"indexed":true,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"DelayedRecordAppended","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"epochEnd","type":"uint256"},{"indexed":false,"internalType":"string","name":"projectId","type":"string"},{"indexed":false,"internalType":"string","name":"snapshotCid","type":"string"},{"indexed":true,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"EpochFinalized","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"begin","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"end","type":"uint256"},{"indexed":true,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"EpochReleased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"snapshotterAddr","type":"address"},{"indexed":false,"internalType":"string","name":"snapshotCid","type":"string"},{"indexed":false,"internalType":"uint256","name":"epochEnd","type":"uint256"},{"indexed":false,"internalType":"string","name":"projectId","type":"string"},{"indexed":true,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"RecordAppended","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"snapshotterAddr","type":"address"},{"indexed":false,"internalType":"uint256","name":"projectId","type":"uint256"}],"name":"snapshotterRegistered","type":"event"},{"inputs":[{"internalType":"string","name":"projectId","type":"string"},{"internalType":"uint256","name":"epochEnd","type":"uint256"}],"name":"checkDynamicConsensus","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"snapshotCid","type":"string"},{"internalType":"uint256","name":"epochEnd","type":"uint256"},{"internalType":"string","name":"projectId","type":"string"},{"internalType":"address","name":"snapshotterAddr","type":"address"}],"name":"commitRecord","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"currentEpoch","outputs":[{"internalType":"uint256","name":"begin","type":"uint256"},{"internalType":"uint256","name":"end","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"epochReleaseTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"epochStatus","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"projectId","type":"string"},{"internalType":"uint256","name":"epochEnd","type":"uint256"}],"name":"forceCompleteConsensus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getAllSnapshotters","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getProjects","outputs":[{"internalType":"string[]","name":"","type":"string[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"projectId","type":"string"}],"name":"getSnapshotters","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getTotalSnapshotterCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"maxSnapshotsCid","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"maxSnapshotsCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"address","name":"","type":"address"}],"name":"projectSnapshotters","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"projectSnapshottersCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"snapshotterAddr","type":"address"},{"internalType":"string","name":"projectId","type":"string"}],"name":"registerPeer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"begin","type":"uint256"},{"internalType":"uint256","name":"end","type":"uint256"}],"name":"releaseEpoch","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"snapshotsReceived","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"string","name":"","type":"string"}],"name":"snapshotsReceivedCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"snapshotters","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"submissionWindow","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newSubmissionWindow","type":"uint256"}],"name":"updateSubmissionWindow","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+
+    const contract = new ethers.Contract(env.PUBLIC_STATE_CONTRACT, ABI, provider);
 
     let epochs = [];
     let snapshotters = [];
@@ -15,10 +24,26 @@
 
 
     onMount(async () => {
-      console.log('got', API_PREFIX);
-      const epoch = await axios.get(API_PREFIX+'/currentEpoch');
-      console.log(epoch.data);
-      currentEpoch = epoch.data.epochEndBlockHeight;
+      //console.warn('current epoch', Object.assign({}, await contract.currentEpoch())[1]);
+      currentEpoch = Object.assign({}, await contract.currentEpoch())[1];
+      /*
+      //console.warn('current epoch', currentEpoch);
+      allSnapshotters = Object.values(Object.assign({}, await contract.getAllSnapshotters()));
+      //console.warn('current allSnapshotters', allSnapshotters);
+      let getProjects = Object.values(Object.assign({}, await contract.getProjects()));
+      //console.warn('current getProjects', getProjects);
+      for (let i=0; i<getProjects.length; i++){
+        const projectSnapshotters = Object.values(Object.assign({}, await contract.getSnapshotters(getProjects[i])));
+        let proj = {
+              id: getProjects[i],
+              snapshotters: projectSnapshotters
+          }
+          projects = [...projects, proj];
+          if (i==99){
+            break;
+          }
+      }
+      */
       const sdata = await axios.get(API_PREFIX+'/metrics/'+slug+'/snapshotters');
       console.log('snapshotters', sdata.data);
       snapshotters = sdata.data.snapshotters;
