@@ -25,25 +25,35 @@
 
     onMount(async () => {
       //console.warn('current epoch', Object.assign({}, await contract.currentEpoch())[1]);
-      currentEpoch = Object.assign({}, await contract.currentEpoch())[1];
-      /*
-      //console.warn('current epoch', currentEpoch);
-      allSnapshotters = Object.values(Object.assign({}, await contract.getAllSnapshotters()));
-      //console.warn('current allSnapshotters', allSnapshotters);
-      let getProjects = Object.values(Object.assign({}, await contract.getProjects()));
-      //console.warn('current getProjects', getProjects);
-      for (let i=0; i<getProjects.length; i++){
-        const projectSnapshotters = Object.values(Object.assign({}, await contract.getSnapshotters(getProjects[i])));
-        let proj = {
-              id: getProjects[i],
-              snapshotters: projectSnapshotters
+      currentEpoch = Object.assign({}, await contract.currentEpoch());
+      let previousEpoch = Number(currentEpoch[0])-1;
+      currentEpoch = Number(currentEpoch[1]);
+      const diff = currentEpoch-previousEpoch
+      console.warn('epoch diff', diff)
+      snapshotters = Object.values(Object.assign({}, await contract.getSnapshotters(slug)));
+      let c=0;
+      for (let i=currentEpoch; c<10; i=i-diff){
+        console.log(await contract.epochStatus(slug, i));
+        let epoch = {
+          id: i,
+          finalized: await contract.epochStatus(slug, i),
+          submissions: []
+        }
+        console.log('current epoch', epoch)
+        for (let j=0; j<snapshotters.length; j++){
+          console.log('checking', i, snapshotters[j], '...')
+          if (await contract.snapshotsReceived(slug, i, snapshotters[j])){
+            let submission = {
+              snapshotterName: snapshotters[j],
+              submissionStatus: 'WITHIN_SCHEDULE' || 'DELAYED'
+            }
+            epoch.submissions = [...epoch.submissions, submission];
           }
-          projects = [...projects, proj];
-          if (i==99){
-            break;
-          }
+        }
+        epochs = [...epochs, epoch];
+        c++;
       }
-      */
+      /*
       const sdata = await axios.get(API_PREFIX+'/metrics/'+slug+'/snapshotters');
       console.log('snapshotters', sdata.data);
       snapshotters = sdata.data.snapshotters;
@@ -67,6 +77,7 @@
             break;
           }
       }
+      //*/
     });
 </script>
 <div>
