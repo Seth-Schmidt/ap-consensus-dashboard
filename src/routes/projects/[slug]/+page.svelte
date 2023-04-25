@@ -1961,7 +1961,7 @@
                 </div>
                 <div class="mt-2 flex">
                   <div class="ml-2 flex flex-shrink-0">
-                    {#if epoch.finalized}
+                    {#if epoch.finalized[0]}
                     <p class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">finalized ({
                     epoch.submissions.filter((d) => d.submissionStatus == 'WITHIN_SCHEDULE').length
                     }/{epoch.submissions.length} {#if epoch.submissions.filter((d) => d.submissionStatus != 'WITHIN_SCHEDULE').length > 0} - {epoch.submissions.filter((d) => d.submissionStatus != 'WITHIN_SCHEDULE').length} Delayed{/if})</p>
