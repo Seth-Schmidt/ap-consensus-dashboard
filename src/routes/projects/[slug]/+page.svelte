@@ -2004,7 +2004,7 @@
     });
 </script>
 <div>
-    <h3 class="text-lg font-medium leading-6 text-gray-900">Project {slug.substr(21, 30)}</h3>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Project: {slug.split(":")[0]} for {slug.split(":")[1]}</h3>
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
       <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
         <dt class="truncate text-sm font-medium text-gray-500">Epochs Shown</dt>

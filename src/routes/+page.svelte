@@ -2012,8 +2012,8 @@
             <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
               <div class="truncate">
                 <div class="flex text-sm">
-                  <p class="truncate font-medium text-indigo-600">{project.id.substr(21, 30)}</p>
-                  <p class="ml-1 flex-shrink-0 font-normal text-gray-500">in {project.id.split("_").pop().split("-")[0]}</p>
+                  <p class="truncate font-medium text-indigo-600">{project.id.split(":")[0]} for {project.id.split(":")[1]}</p>
+                  <p class="ml-1 flex-shrink-0 font-normal text-gray-500">in {project.id.split(":")[2]}</p>
                 </div>
                 {#if 0}
                 <div class="mt-2 flex">
