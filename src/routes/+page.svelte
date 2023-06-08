@@ -13,269 +13,41 @@
     let provider = new ethers.JsonRpcProvider(RPC);
     const ABI=[
 	{
-		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
+				"internalType": "uint8",
+				"name": "epochSize",
+				"type": "uint8"
+			},
+			{
 				"internalType": "uint256",
-				"name": "epochId",
+				"name": "sourceChainId",
 				"type": "uint256"
 			},
 			{
-				"indexed": false,
 				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
+				"name": "sourceChainBlockTime",
 				"type": "uint256"
 			}
 		],
-		"name": "AggregateDagCidFinalized",
-		"type": "event"
+		"stateMutability": "nonpayable",
+		"type": "constructor"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "AggregateDagCidSubmitted",
-		"type": "event"
+		"inputs": [],
+		"name": "InvalidShortString",
+		"type": "error"
 	},
 	{
-		"anonymous": false,
 		"inputs": [
 			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
 				"internalType": "string",
-				"name": "projectId",
+				"name": "str",
 				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "aggregateCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
 			}
 		],
-		"name": "AggregateFinalized",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "snapshotterAddr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "aggregateCid",
-				"type": "string"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "AggregateSubmitted",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "DagCidFinalized",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "snapshotterAddr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "aggregateCid",
-				"type": "string"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "DelayedAggregateSubmitted",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "snapshotterAddr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "indexTailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "DelayedIndexSubmitted",
-		"type": "event"
+		"name": "StringTooLong",
+		"type": "error"
 	},
 	{
 		"anonymous": false,
@@ -316,6 +88,12 @@
 	},
 	{
 		"anonymous": false,
+		"inputs": [],
+		"name": "EIP712DomainChanged",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
 		"inputs": [
 			{
 				"indexed": true,
@@ -350,98 +128,6 @@
 		"inputs": [
 			{
 				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "indexTailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "tailBlockEpochSourceChainHeight",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "IndexFinalized",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "snapshotterAddr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "indexTailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "IndexSubmitted",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
 				"internalType": "address",
 				"name": "previousOwner",
 				"type": "address"
@@ -454,80 +140,6 @@
 			}
 		],
 		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "SnapshotDagCidFinalized",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "epochEnd",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "SnapshotDagCidSubmitted",
 		"type": "event"
 	},
 	{
@@ -612,9 +224,15 @@
 				"internalType": "address",
 				"name": "snapshotterAddress",
 				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "allowed",
+				"type": "bool"
 			}
 		],
-		"name": "SnapshotterAllowed",
+		"name": "SnapshottersUpdated",
 		"type": "event"
 	},
 	{
@@ -623,500 +241,39 @@
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "snapshotterAddr",
+				"name": "validatorAddress",
 				"type": "address"
 			},
 			{
 				"indexed": false,
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
+				"internalType": "bool",
+				"name": "allowed",
+				"type": "bool"
 			}
 		],
-		"name": "SnapshotterRegistered",
+		"name": "ValidatorsUpdated",
 		"type": "event"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
+		"inputs": [],
+		"name": "EPOCH_SIZE",
+		"outputs": [
 			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "stateBuilderAddress",
-				"type": "address"
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
 			}
 		],
-		"name": "StateBuilderAllowed",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operatorAddr",
-				"type": "address"
-			}
-		],
-		"name": "addOperator",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "snapshotterAddr",
-				"type": "address"
-			}
-		],
-		"name": "allowSnapshotter",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "dagCid",
-				"type": "string"
-			},
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct AuditRecordStoreDynamicSnapshottersWithIndexing.Request",
-				"name": "request",
-				"type": "tuple"
-			},
-			{
-				"internalType": "bytes",
-				"name": "signature",
-				"type": "bytes"
-			}
-		],
-		"name": "commitFinalizedDAGcid",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			}
-		],
-		"name": "forceCompleteConsensusAggregate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "forceCompleteConsensusIndex",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			}
-		],
-		"name": "forceCompleteConsensusSnapshot",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "begin",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "end",
-				"type": "uint256"
-			}
-		],
-		"name": "releaseEpoch",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operatorAddr",
-				"type": "address"
-			}
-		],
-		"name": "removeOperator",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "snapshotCid",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct AuditRecordStoreDynamicSnapshottersWithIndexing.Request",
-				"name": "request",
-				"type": "tuple"
-			},
-			{
-				"internalType": "bytes",
-				"name": "signature",
-				"type": "bytes"
-			}
-		],
-		"name": "submitAggregate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "indexTailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tailBlockEpochSourceChainHeight",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			},
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct AuditRecordStoreDynamicSnapshottersWithIndexing.Request",
-				"name": "request",
-				"type": "tuple"
-			},
-			{
-				"internalType": "bytes",
-				"name": "signature",
-				"type": "bytes"
-			}
-		],
-		"name": "submitIndex",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "snapshotCid",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "deadline",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct AuditRecordStoreDynamicSnapshottersWithIndexing.Request",
-				"name": "request",
-				"type": "tuple"
-			},
-			{
-				"internalType": "bytes",
-				"name": "signature",
-				"type": "bytes"
-			}
-		],
-		"name": "submitSnapshot",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "newAggregateSubmissionWindow",
-				"type": "uint256"
-			}
-		],
-		"name": "updateAggregateSubmissionWindow",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "newIndexSubmissionWindow",
-				"type": "uint256"
-			}
-		],
-		"name": "updateIndexSubmissionWindow",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_minSubmissionsForConsensus",
-				"type": "uint256"
-			}
-		],
-		"name": "updateMinSnapshottersForConsensus",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "newsnapshotSubmissionWindow",
-				"type": "uint256"
-			}
-		],
-		"name": "updateSnapshotSubmissionWindow",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "aggregateReceived",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"name": "aggregateReceivedCount",
+		"name": "SOURCE_CHAIN_BLOCK_TIME",
 		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "aggregateStartTime",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "blocknumber",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "aggregateStatus",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "finalized",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
 				"type": "uint256"
 			}
 		],
@@ -1125,65 +282,12 @@
 	},
 	{
 		"inputs": [],
-		"name": "aggregateSubmissionWindow",
+		"name": "SOURCE_CHAIN_ID",
 		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			}
-		],
-		"name": "checkDynamicConsensusAggregate",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "epochId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "indexIdentifierHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "checkDynamicConsensusIndex",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -1206,7 +310,7 @@
 		"outputs": [
 			{
 				"internalType": "bool",
-				"name": "success",
+				"name": "",
 				"type": "bool"
 			}
 		],
@@ -1231,6 +335,49 @@
 				"internalType": "uint256",
 				"name": "epochId",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "eip712Domain",
+		"outputs": [
+			{
+				"internalType": "bytes1",
+				"name": "fields",
+				"type": "bytes1"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "version",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "chainId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "verifyingContract",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "salt",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "extensions",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -1269,77 +416,18 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "",
+				"name": "projectId",
 				"type": "string"
 			},
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "epochId",
 				"type": "uint256"
 			}
 		],
-		"name": "finalizedDagCids",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"name": "finalizedDagHeights",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "finalizedIndexes",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "tailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tailDAGBlockEpochSourceChainHeight",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "forceCompleteConsensusSnapshot",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1350,38 +438,6 @@
 				"internalType": "address[]",
 				"name": "",
 				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getOperators",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "projectId",
-				"type": "string"
-			}
-		],
-		"name": "getProjectFirstEpochEnd",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "projectFirstEpochEnd",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -1414,250 +470,13 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "indexReceived",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"name": "indexReceivedCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "indexStartTime",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "blocknumber",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "indexStatus",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "finalized",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
-		"name": "indexSubmissionWindow",
+		"name": "getValidators",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "address[]",
 				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "maxAggregatesCid",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "maxAggregatesCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "maxIndexCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "maxIndexData",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "tailDAGBlockHeight",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tailDAGBlockEpochSourceChainHeight",
-				"type": "uint256"
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -1783,6 +602,73 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "begin",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "end",
+				"type": "uint256"
+			}
+		],
+		"name": "releaseEpoch",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "snapshotStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "finalized",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "snapshotSubmissionWindow",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "string",
 				"name": "",
 				"type": "string"
@@ -1841,48 +727,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "snapshotStatus",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "finalized",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "snapshotSubmissionWindow",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
@@ -1902,14 +746,174 @@
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "snapshotCid",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "epochId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "projectId",
+				"type": "string"
+			},
+			{
 				"components": [
 					{
 						"internalType": "uint256",
 						"name": "deadline",
 						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "snapshotCid",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "epochId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "projectId",
+						"type": "string"
 					}
 				],
-				"internalType": "struct AuditRecordStoreDynamicSnapshottersWithIndexing.Request",
+				"internalType": "struct PowerloomProtocolState.Request",
+				"name": "request",
+				"type": "tuple"
+			},
+			{
+				"internalType": "bytes",
+				"name": "signature",
+				"type": "bytes"
+			}
+		],
+		"name": "submitSnapshot",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_minSubmissionsForConsensus",
+				"type": "uint256"
+			}
+		],
+		"name": "updateMinSnapshottersForConsensus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "newsnapshotSubmissionWindow",
+				"type": "uint256"
+			}
+		],
+		"name": "updateSnapshotSubmissionWindow",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_snapshotters",
+				"type": "address[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "_status",
+				"type": "bool[]"
+			}
+		],
+		"name": "updateSnapshotters",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_validators",
+				"type": "address[]"
+			},
+			{
+				"internalType": "bool[]",
+				"name": "_status",
+				"type": "bool[]"
+			}
+		],
+		"name": "updateValidators",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "snapshotCid",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "epochId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "projectId",
+				"type": "string"
+			},
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "snapshotCid",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "epochId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "projectId",
+						"type": "string"
+					}
+				],
+				"internalType": "struct PowerloomProtocolState.Request",
 				"name": "request",
 				"type": "tuple"
 			},
