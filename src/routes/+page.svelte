@@ -943,6 +943,16 @@
 
     const contract = new ethers.Contract(env.PUBLIC_STATE_CONTRACT, ABI, provider);
 
+	const liteModePairs = [
+		"0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc",
+        "0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5",
+        "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+        "0x3041cbd36888becc7bbcbc0045e3b1f144466f5f",
+        "0xd3d2e2692501a5c9ca623199d38826e513033a17",
+        "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+        "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
+	];
+
     let projects = []
     let currentEpoch = "";
 	let currentEpochId = "";
@@ -955,8 +965,13 @@
       //console.warn('current epoch', currentEpoch);
       allSnapshotters = Object.values(Object.assign({}, await contract.getAllSnapshotters()));
       //console.warn('current allSnapshotters', allSnapshotters);
-      let getProjects = Object.values(Object.assign({}, await contract.getProjects()));
-      //console.warn('current getProjects', getProjects);
+	  let getProjects;
+	  if (env.SHOW_ALL_PAIRS){
+	    getProjects = Object.values(Object.assign({}, await contract.getProjects()));
+	  } else {
+		getProjects = [...liteModePairs.map((pair) => 'pairContract_pair_total_reserves:'+pair.toLowerCase()+':UNISWAPV2'),...liteModePairs.map((pair) => 'pairContract_trade_volume:'+pair.toLowerCase()+':UNISWAPV2'), ...['aggregate_24h_top_pairs_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_stats_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_top_tokens_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_7d_top_pairs_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2', 'aggregate_7d_top_stats_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2', 'aggregate_7d_top_tokens_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2']]
+	  }
+	  console.log('current getProjects', getProjects);
       for (let i=0; i<getProjects.length; i++){
         const projectSnapshotters = Object.values(Object.assign({}, await contract.getAllSnapshotters()));
         let proj = {
