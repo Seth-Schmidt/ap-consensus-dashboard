@@ -969,7 +969,7 @@
 	  if (env.SHOW_ALL_PAIRS){
 	    getProjects = Object.values(Object.assign({}, await contract.getProjects()));
 	  } else {
-		getProjects = [...liteModePairs.map((pair) => 'pairContract_pair_total_reserves:'+pair.toLowerCase()+':UNISWAPV2'),...liteModePairs.map((pair) => 'pairContract_trade_volume:'+pair.toLowerCase()+':UNISWAPV2'), ...['aggregate_24h_top_pairs_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_stats_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_top_tokens_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_7d_top_pairs_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2', 'aggregate_7d_top_stats_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2', 'aggregate_7d_top_tokens_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2']]
+		getProjects = [...liteModePairs.map((pair) => 'pairContract_pair_total_reserves:'+pair.toLowerCase()+':UNISWAPV2'),...liteModePairs.map((pair) => 'pairContract_trade_volume:'+pair.toLowerCase()+':UNISWAPV2'), ...['aggregate_24h_top_pairs_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_stats_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_24h_top_tokens_lite:35ee1886fa4665255a0d0486c6079c4719c82f0f62ef9e96a98f26fde2e8a106:UNISWAPV2', 'aggregate_7d_top_pairs_lite:a62a2ce0d16f995d901016bff230e419c9c8a51ac267008fcb58e67fea40b676:UNISWAPV2']]
 	  }
 	  console.log('current getProjects', getProjects);
       for (let i=0; i<getProjects.length; i++){
