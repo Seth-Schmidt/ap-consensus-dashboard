@@ -950,9 +950,17 @@
     let currentEpoch = "";
 	let currentEpochId = "";
 	let search = "";
+	let prevSearch = "";
 
+	$: {
+		if (search != prevSearch){
+			localStorage.setItem("search_term", search);
+			prevSearch = search;
+		}
+	}
 
     onMount(async () => {
+	  search = localStorage.getItem("search_term");
       currentEpoch = Object.assign({}, await contract.currentEpoch());
 	  console.warn(currentEpoch);
       currentEpochId = Number(currentEpoch[2]);
