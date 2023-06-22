@@ -949,6 +949,7 @@
     let snapshotters = [];
     let currentEpoch = "";
 	let currentEpochId = "";
+	let search = "";
 
 
     onMount(async () => {
@@ -1027,6 +1028,14 @@
       </div>
     </dl>
 </div>
+<div>
+	<div class="relative mt-2 flex items-center">
+	  <input type="text" name="search" id="search" bind:value={search} placeholder="Search snapshotters" class="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+	  <div class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
+		<kbd class="inline-flex items-center rounded border border-gray-200 px-1 font-sans text-xs text-gray-400">🔎</kbd>
+	  </div>
+	</div>
+</div>
 <div class="overflow-hidden bg-white shadow sm:rounded-md">
     <ul role="list" class="divide-y divide-gray-200">
       {#each epochs as epoch}
@@ -1068,7 +1077,9 @@
               <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                 <div class="flex -space-x-1 overflow-hidden">
                   {#each epoch.submissions as snapshotter}
+				  {#if search="" || snapshotter.snapshotterName.toLowerCase().includes(search.toLowerCase())}
                   <img class="inline-block h-6 w-6 rounded-full ring-2 {snapshotter.submissionStatus == 'WITHIN_SCHEDULE' ? 'ring-white': 'ring-red'}" alt="{snapshotter.snapshotterName}" title="{snapshotter.snapshotterName}" src="https://avatars.dicebear.com/api/identicon/{snapshotter.snapshotterName}.png">
+				  {/if}
                   {/each}
                 <!--
                   <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton">
