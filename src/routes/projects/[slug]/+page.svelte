@@ -967,11 +967,12 @@
       currentEpoch = Number(currentEpoch[1]);
       console.warn('current epoch', currentEpoch, currentEpochId);
       snapshotters = Object.values(Object.assign({}, await contract.getAllSnapshotters()));
+	  const epochSize = Number(await contract.EPOCH_SIZE());
       let c=0;
       for (let i=currentEpochId; c<5; i=i-1){
         console.log(await contract.snapshotStatus(slug, i));
         let epoch = {
-          id: currentEpoch-(10*(currentEpochId-i)),
+          id: currentEpoch-(epochSize*(currentEpochId-i)),
           finalized: await contract.snapshotStatus(slug, i),
 		  maxSnapshotsCount: Number(await contract.maxSnapshotsCount(slug, i)),
           submissions: []
