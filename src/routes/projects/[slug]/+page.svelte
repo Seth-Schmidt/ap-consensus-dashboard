@@ -1294,11 +1294,12 @@
       console.warn('current epoch', currentEpoch, currentEpochId);
       snapshotters = Object.values(Object.assign({}, await contract.getSnapshotters()));
       let c=0;
-      for (let i=currentEpochId; c<10; i=i-1){
+      for (let i=currentEpochId; c<5; i=i-1){
         console.log(await contract.snapshotStatus(slug, i));
         let epoch = {
           id: currentEpoch-(2*(currentEpochId-i)),
           finalized: await contract.snapshotStatus(slug, i),
+		  maxSnapshotsCount: Number(await contract.maxSnapshotsCount(slug, i)),
           submissions: []
         }
         console.log('current epoch', epoch)
@@ -1307,7 +1308,7 @@
           if (await contract.snapshotsReceived(slug, i, snapshotters[j])){
             let submission = {
               snapshotterName: snapshotters[j],
-              submissionStatus: 'WITHIN_SCHEDULE' || 'DELAYED'
+              submissionStatus: 'WITHIN_SCHEDULE' //#FIXME - contract requires a change to record these individually per snapshotter
             }
             epoch.submissions = [...epoch.submissions, submission];
           }
@@ -1376,9 +1377,8 @@
                 <div class="mt-2 flex">
                   <div class="ml-2 flex flex-shrink-0">
                     {#if epoch.finalized[0]}
-                    <p class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">finalized ({
-                    epoch.submissions.filter((d) => d.submissionStatus == 'WITHIN_SCHEDULE').length
-                    }/{epoch.submissions.length} {#if epoch.submissions.filter((d) => d.submissionStatus != 'WITHIN_SCHEDULE').length > 0} - {epoch.submissions.filter((d) => d.submissionStatus != 'WITHIN_SCHEDULE').length} Delayed{/if})</p>
+                    <p class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">finalized
+						({epoch.maxSnapshotsCount}/{epoch.submissions.length}{#if epoch.submissions.length != epoch.maxSnapshotsCount} - {epoch.submissions.length-epoch.maxSnapshotsCount} delayed {/if})</p>
                     {:else}
                     <p class="inline-flex rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-800">unfinalized</p>
                     {/if}
