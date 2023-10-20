@@ -1423,7 +1423,7 @@
                 <div class="flex -space-x-1 overflow-hidden">
                   {#each epoch.submissions as snapshotter}
 				  {#if search="" || snapshotter.snapshotterName.toLowerCase().includes(search.toLowerCase())}
-                  	<img class="inline-block h-6 w-6 rounded-full ring-2 {snapshotter.submissionStatus == 'WITHIN_SCHEDULE' ? 'ring-white': 'ring-red'}" alt="{snapshotter.snapshotterName}" title="{snapshotter.snapshotterName}" src="https://avatars.dicebear.com/api/identicon/{snapshotter.snapshotterName}.png">
+                  	<img class="inline-block h-6 w-6 rounded-full ring-2 {snapshotter.submissionStatus == 'WITHIN_SCHEDULE' ? 'ring-white': 'ring-red'}" alt="{snapshotter.snapshotterName}" title="{snapshotter.snapshotterName}" src="https://api.dicebear.com/7.x/identicon/png?seed={snapshotter.snapshotterName}">
 				  {/if}
                   {/each}
                 <!--

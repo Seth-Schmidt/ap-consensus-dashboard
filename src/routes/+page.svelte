@@ -1390,7 +1390,7 @@
               <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
                 <div class="flex -space-x-1 overflow-hidden">
                   {#each project.snapshotters as snapshotter}
-                  <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" alt="{snapshotter}" title="{snapshotter}" src="https://avatars.dicebear.com/api/identicon/{snapshotter}.png">
+                  <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" alt="{snapshotter}" title="{snapshotter}" src="https://api.dicebear.com/7.x/identicon/png?seed={snapshotter}">
                   {/each}
                 <!--
                   <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Lindsay Walton">
